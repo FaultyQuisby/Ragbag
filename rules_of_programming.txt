@@ -1,0 +1,77 @@
+Never trust Input : 
+	Never trust the data you're given and always validate it.
+
+Prevent errors : 
+	If an error is possible, no matter how probable, try to prevent it.
+
+Fail Early and Openly : 
+	Fail early, cleanly, and openly, stating what happened, where, 
+	and how to fix it.
+
+Document assumptions : 
+	Clearly state the pre-conditions, post-conditions and invariants.
+
+Prevention over documentation : 
+	Don't do with documentation, that which can be done with code or 
+	avoided completely.
+
+Automate everything : 
+	Automate everything, especially testing.
+
+Simplify and Clarify : 
+	Always simplify the code to the smallest, cleanest form that works without 
+	sacrifying safety.
+
+Question Authority : 
+	Don't blindly follow or reject rules.
+
+
+FUNCTIONS :
+	
+	. For each parameter, identify what its preconditions are, and wheter the 
+	  precondition should cause a failure or return an error. If you are 
+	  writing a library, favor errors over failures.
+
+	. Add assert calls at the begining that checks for each failure
+	  precondition using assert(test && "message");.
+	  This little hack does the test, and when it fails, the OS will tipically
+	  print the assert line for you, that includes this message.
+	  This is very helpful when you're trying to figure out why assert is 
+	  there.
+
+	. For the other preconditions, return the error code or use the check
+	  macro to give an error message.
+
+	. Document why these preconditions exist so that when a programmer hits
+	  the error, they can figure out if they're really necessary or not.
+
+	. If you're modifying the inputs, make sure they are correctly formed
+	  when the function exists, or abort if they aren't.
+
+	. Always check the error codes of function you use.
+
+	. Return consistent error codes so that you can do this for all of your
+	  functions.
+
+PREVENTING ERRORS :
+
+	. List all the possible errors that can happen, no matter how probable
+	  (within reason).
+
+	. Give each possible error a probability that's a percentage of the
+	  operations that can be vulnerable.
+
+	. Calculate the effort in number of hours or amount of code to prevent it.
+
+	. Rank them by effort (lowest to highest), and probability (highest to
+	  lowest). This makes for your task list.
+
+	. Prevent all the errors you can in this list, aiming for removing the 
+	  possibility, then reducing the probability if you can't make it
+	  impossible.
+
+	. If there are errors you can't fix, then document them so someone else
+	  can fix them.
+
+MOTO :
+	HACK TO GET STUFF WORKING AND THEN WHEN IT WORKS MAKE IT SAFE AS FUCK!
