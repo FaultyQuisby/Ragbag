@@ -129,6 +129,15 @@ GIT :
         move master to this updated part of the tree
             git rebase
             
+	Change the message of a former commit.
+		Show previous commits
+			git rebase -i HEAD~3
+		Change pick with reword in the UI
+		Save and close
+		Do your modifications
+		Force-push the amended commits
+			git push --force
+
     git tag v1 <commit_hash> -> creates a tag named v1 referencing the specified commit
     
     git describe <ref>
