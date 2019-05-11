@@ -1,0 +1,7 @@
+mkdir c-skeleton
+cd c-skeleton
+touch LICENSE README.md Makefile
+mkdir bin src tests
+cp dbg.h src/
+ls -l
+ls -l src
