@@ -371,8 +371,6 @@ RESTORE COMMAND :
 TO FIX :
     Double tab in vim for no reason
 
-    Try to fix the red in first char of last line while code incomplete in vim
-
 CODING TIPS : 
     You don't have to do memcpy on structures anymore you can do 
 	the following :
