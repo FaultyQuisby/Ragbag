@@ -1,5 +1,6 @@
 .BASHRC :
     shopt -s histverify
+		That's if you want to validate before re-running a previous command.
 
 VIM COMMANDS :
     % -> moves to matching parenthesis, square bracket or curly brace
@@ -332,6 +333,10 @@ VIM INSTALL :
     set textwidth=79 
     set colorcolumn=80 
     set smartindent 
+	highlight ALEError ctermfg=130 cterm=underline
+	highlight ALEWarning ctermfg=130 cterm=underline
+	highlight ALEErrorSign ctermfg=130
+	highlight ALEWarningSign ctermfg=130
 
 GDB COMMAND : 
     gdb --batch --ex run --ex bt --ex q --args [program] [args]
