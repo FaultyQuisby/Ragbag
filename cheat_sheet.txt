@@ -14,13 +14,15 @@ VIM COMMANDS :
     12G -> go to line 12
     gd -> go to the local declaration
     gD -> go to the global declaration
-    g* -> search for the word under the cursor (like * but g* on 'rain' will find words like 'rainbow')
+    g* -> search for the word under the cursor 
+		  (like * but g* on 'rain' will find words like 'rainbow')
     g# -> same as g* but in backward direction
     v -> select chars
     V -> select line
     C^v -> select blocks
     d -> cut
     y -> copy
+	yy -> copies the current line
     p -> paste after
     P -> paste before
     ciw -> change inner word
@@ -58,93 +60,131 @@ VIM COMMANDS :
     n -> after a search command goto next occurence
     N -> after a search commant goto previous occurence
     :e 'filename' -> opens 'filename'
+	c^f -> move forward a page
+	c^b -> move backward a page
 
 SUBSTITUTE :
-    :%s/old_WORD/new_WORD/g -> replaces all instances of a word by the new specified one
+    :%s/old_WORD/new_WORD/g -> replaces all instances of a word by 
+							   the new specified one
     (gc, ask for confirmation)
     (gi, case insensitive)
 
 GIT : 
     git add -A -> tracks all untracked files
     git add . -> adds all files of the current directory to track
-    git add * -> adds all files of the current directory EVEN FUCKING FOLDERS AND THEIR CONTENT.
+    git add * -> adds all files of the current directory 
+			     EVEN FUCKING FOLDERS AND THEIR CONTENT.
     
     git commit -m "message" -> commits with a message
     git checkout <branch> -> set active branch
     git branch <branch> -> create a new branch
     git checkout -b <branch> -> create a new branch AND set it as active
-    git merge <branch> -> merges the specified branch into the active branch, making a unique branch but keeping history of the parents. Merge is suck and fusion.
+    git merge <branch> -> merges the specified branch into the active branch, 
+						  making a unique branch but keeping history of the 
+						  parents. Merge is suck and fusion.
 
     C0 -- C1 ---- C2
-                 \              \
-                C2' ---- C3
+      	   \        \
+ 		   C2' ---- C3
 
-    git rebase <branch> -> rebase the active branch onto the specified branch.  Making the specified branch parent of the active branch. Rebase is blow and expand.
+    git rebase <branch> -> rebase the active branch onto the specified branch, 
+						   making the specified branch parent of the active 
+						   branch. 
+						   Rebase is blow and expand.
 
     C0 -- C1 ---- C2
-                 \              \
-                C2' ---- C3
+           \        \
+           C2' ---- C3
     (with C2' local only)
     
     the -i option stands for "interactive" it opens an UI in which you can :
      - Reorder commits.
      - Drop commits (via pick on or off)
-     - Squash commits (combine) //////////// learn that dog ////////////
-     it will append the new ordered and cleaned up at will list of commits to the rebased at, specified commit.
+     - Squash commits (combine) //////////// learn that dawg ////////////
+     it will append the new ordered and cleaned up at will list of commits to 
+	 the rebased at, specified commit.
 
-    HEAD is a pointer representing where you are in the repo, if its on a branch pointer then the latter is said active.
-    HEAD is the symbolic name for the currently ckecked out commit. It's the commit you're working on top of.
-    HEAD is by default, the last commit of your active branch (points to your active branch pointer which points to its last commit).
+    HEAD is a pointer representing where you are in the repo, 
+	if its on a branch pointer then the latter is said active.
+
+    HEAD is the symbolic name for the currently ckecked out commit. 
+	It's the commit you're working on top of.
+
+    HEAD is by default, the last commit of your active branch 
+	(points to your active branch pointer which points to its last commit).
+	
     "HEAD -> master -> C1"
     
-    git checkout <commit_hash> -> makes HEAD point to the adress of the specified commit, making it more like so : "HEAD -> C1".
+    git checkout <commit_hash> -> makes HEAD point to the adress of the 
+	specified commit, making it more like so : 
+
+	"HEAD -> C1".
     
     This is called detaching.
     
-    You can specify the begining of the commit_hash, git is "smart" about that or you can use relative refs:
-    git checkout master^ -> sets HEAD to the adress of the second to last commit in master branch.
-    git checkout master^^ -> sets HEAD to the adress of the third to last commit in master branch.
-    git checkout master~[nb] -> sets HEAD to the adress of the "nb" to last commit in master branch.
+    You can specify the begining of the commit_hash, git is "smart" about 
+	that or you can use relative refs:
+    git checkout master^ -> sets HEAD to the adress of the second to last 
+							commit in master branch.
+    git checkout master^^ -> sets HEAD to the adress of the third to last 
+							 commit in master branch.
+    git checkout master~[nb] -> sets HEAD to the adress of the "nb" to last 
+								commit in master branch.
     
-    HEAD can also be self ref'd
+    HEAD can also be self ref'd:
+
     git checkout HEAD^ -> will move HEAD up a lvl.
     git checkout HEAD~4 -> will move HEAD up 4 lvls.
     
     You can reassign a branch pointer to a commit with the -f option.
-    git branch -f master HEAD~3 -> moves (by force) the master branch to three parents behind HEAD.
+    git branch -f master HEAD~3 -> moves (by force) the master branch to three 
+								   parents behind HEAD.
     
-    git reset HEAD~1 -> moves the branch backwards removing last commit (if head is on the branch name) great for local.
+    git reset HEAD~1 -> moves the branch backwards removing last commit 
+						(if head is on the branch name) great for local.
     
-    git revert HEAD -> creates a new commit reverting the changes of its now parent one that's the one you want to use if you wanna push a straight reversion.
+    git revert HEAD -> creates a new commit reverting the changes of its now 
+					   parent one that's the one you want to use if you wanna 
+					   push a straight reversion.
     
-    git cherry-pick <commit_hash_1> <commit_hash_2> ... -> adds a new commit under the active branch for each of the hash specified (multi cp pst).
+    git cherry-pick <commit_hash_1> <commit_hash_2> ... 
+		-> adds a new commit under the active branch for each 
+		   of the hash specified (multi cp pst).
     
     Make a modification in a former commit.
-        re-order the commits so the one to be modified is on top
-            git rebase -i
-        make the slight modification
-            commit --amend
-        re-order the commits back to how they were previously
-            git rebase -i
-        move master to this updated part of the tree
-            git rebase
+	
+    	git rebase -i -> re-order the commits so the one to be 
+						 modified is on top
+
+   		commit --amend -> make the slight modification
+
+   		git rebase -i -> re-order the commits back to how they were previously
+  
+  		git rebase -> move master to this updated part of the tree
             
 	Change the message of a former commit.
+
 		Show previous commits
+
 			git rebase -i HEAD~3
+			
 		Change pick with reword in the UI
 		Save and close
 		Do your modifications
 		Force-push the amended commits
+
 			git push --force
 
-    git tag v1 <commit_hash> -> creates a tag named v1 referencing the specified commit
+    git tag v1 <commit_hash> -> creates a tag named v1 referencing 
+								the specified commit
     
     git describe <ref>
         ref is anything git can resolve into a  commit (HEAD by default)
         output :
             <tag>_<numCommits>_g<hash>
-            tag is the closest ancestor tag in history, numCommits is how many commits away this tag is and hash is the hash of the comit being described.
+            tag is the closest ancestor tag in history, numCommits is how many 
+			commits away this tag is and hash is the hash of the comit being 
+			described.
     
     choosing a parent when going upwards from a merge.
         git checkout master^ (first parent)
@@ -154,66 +194,104 @@ GIT :
         
 GIT REMOTE :
 
-    git clone <adress> -> to get a full copy of a distant repo on your local machine.
+    git clone <adress> -> to get a full copy of a distant repo on your local 
+						  machine.
     
     o/master -> a remote branch
-    <remote_name>/<branch_name> -> origin/master is the branch name for your remote repo.
-    when you do git checkout origin/master; git commit, git puts you into detached HEAD mode and makes a hidden commit.
+
+    <remote_name>/<branch_name> -> origin/master is the branch name for your 
+								   remote repo.
+
+    When you do git checkout origin/master; git commit, git puts you into 
+	detached HEAD mode and makes a hidden commit.
     
-    git fetch <adress> -> updates your local repo from the distant one. It updates where the remote branches points so be careful with those.
-                                                    AND it doesn't update existing files.
+    git fetch <adress> -> updates your local repo from the distant one. 
+						  It updates where the remote branches points so be 
+						  careful with those.
+                                                    
+						  AND it doesn't update existing files.
     
-    git fetch origin foo -> Goes to the foo branch on the remote, grab all the commits that aren't present locally, and then plop them down onto
-                                                     the origin/foo branch locally
+    git fetch origin foo -> Goes to the foo branch on the remote, grab all the 
+							commits that aren't present locally, and then plop 
+							them down onto the origin/foo branch locally.
     
     git fetch origin <source>:<destination>
-                                                    <source> is a place on the remote and <destination is a local place to put those commits.
-                                                    creates the destination if it doesn't exists already.
+    	<source> is a place on the remote and <destination is a local place to 
+		put those commits.
+        It creates the destination if it doesn't exists already.
     
     git pull -> is essentially a fetch followed by a merge branch fetched.
     
-    git push -> sends your commits to the remote repo and updates the position of origin/master pointer 
-                             (BE EXTRA CAREFUL ABOUT THE push.default file! See below.)
+    git push -> sends your commits to the remote repo and updates the position 
+				of origin/master pointer 
+                (BE EXTRA CAREFUL ABOUT THE push.default file! See below.)
                              
     git push <remote> <place>
     git push origin master
-            Goes to branch named "master" in local repository, grab all the commits, and then go to the branch "master" on the remote named "origin".
+            Goes to branch named "master" in local repository, 
+			grab all the commits, and then go to the branch "master" on the 
+			remote named "origin".
             Place whatever commits are missing on that branch.
-            place is the location to synchronize between the two repositories eg. master local and master remote.
+            place is the location to synchronize between the two repositories 
+			eg. master local and master remote.
             In this case, git ignores where HEAD is pointing to.
             
     git push origin <source>:<destination>
-            Instead of copying at the same branch from local to remote, this one actually specifies the branches.
-            It can create non existent branches (creating a new local pointer "origin/newbranch" , and make use of relative references (see line 104)
+            Instead of copying at the same branch from local to remote, 
+			this one actually specifies the branches.
+            It can create non existent branches 
+			(creating a new local pointer "origin/newbranch" , 
+			and make use of relative references (see line 104)
     
     git push origin :<destination>
-            deletes the <destination> branch on remote and local (if it is on local).
+            deletes the <destination> branch on remote and local 
+			(if it is on local).
     
     git fetch origin :<destination>
             creates the <destination> branch on local. OMEGALUL.
             
             
     git pull
-        if git push is broken because your are late and the project is too new for your old slow ass :
-        git pull --rebase; git push == git fetch; git rebase origin/master; git push (leaves the remote untouched but lose history)
-        git pull; git push == git fetch; git merge origin/master; git push (leaves a trace of your merge in the remote, keeps complete trace of history)
+        If git push is broken because your are late and the project 
+		is too new for your old slow ass :
+
+        git pull --rebase; git push == git fetch; git rebase origin/master; 
+									   git push 
+		(leaves the remote untouched but lose history)
+
+        git pull; git push == git fetch; git merge origin/master; 
+							  git push 
+		(leaves a trace of your merge in the remote, 
+		 keeps complete trace of history)
     
-    git pull origin <source>:<destination> == git fetch origin <source>:<destination>; git merge <destination>
-    git pull origin foo == git fetch origin foo; git merge origin/foo
-    git pull origin bar~1:bugFix  == git fetch origin bar~1:bufFix; git merge bugFix
+    	git pull origin <source>:<destination> == 
+									git fetch origin <source>:<destination>; 
+									git merge <destination>
+
+    	git pull origin foo == git fetch origin foo; git merge origin/foo
+
+    	git pull origin bar~1:bugFix  == git fetch origin bar~1:bufFix; 
+									 git merge bugFix
         
     
-    git checkout -b totallyNotMaster origin/master -> creates a new branch named totallynotMaster and sets it to track origin/master.
-    git branch -u origin/master foo -> sets the foo branch to track origin/master if HEAD is not on it, otherwise go : git branch -u origin/master
-    Do this if you want to push another branch than master to the remote master. Or if you want to pull from remote master under another branch than master.
+    git checkout -b totallyNotMaster origin/master -> creates a new branch 
+	named totallynotMaster and sets it to track origin/master.
+
+    git branch -u origin/master foo -> sets the foo branch to track 
+	origin/master if HEAD is not on it, otherwise go : 
+		git branch -u origin/master
+													
+    Do this if you want to push another branch than master to the 
+	remote master. 
+	Or if you want to pull from remote master under another branch 
+	than master.
     
-    push.default values :
-        upstream
+    push.default values : "upstream"
         
 GIT SSH :
-	https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-	https://help.github.com/en/articles/adding-a-new-ssh-key-to-your-github-account
-    
+	https://tinyurl.com/y59795nn
+    https://tinyurl.com/y5qbbra7 
+
 BASH :
     cp foo.data bar.data
     !!:gs/data/index
@@ -274,57 +352,100 @@ TO LEARN :
     The heap memory is organised like a tree ?
 
 BACKUP COMMAND :
-    sudo rsync -aAXv --delete --exclude=/dev/* --exclude=/proc/* --exclude=/sys/* --exclude=/tmp/* --exclude=/run/* --exclude=/mnt/* --exclude=/media/* --exclude="swapfile" --exclude="lost+found" --exclude=".cache" --exclude="Downloads" --exclude=".VirtualBoxVMs" --exclude=".ecryptfs" /source /destination
+    sudo rsync -aAXv --delete --exclude=/dev/* --exclude=/proc/* 
+	--exclude=/sys/* --exclude=/tmp/* --exclude=/run/* --exclude=/mnt/* 
+	--exclude=/media/* --exclude="swapfile" --exclude="lost+found" 
+	--exclude=".cache" --exclude="Downloads" --exclude=".VirtualBoxVMs" 
+	--exclude=".ecryptfs" /source /destination
 
     You can also add the option --dry-run to simulate the backup process.
 
 RESTORE COMMAND :
-
     sudo rsync -aAXv --delete --exclude="lost+found" /backup /system
 
 TO FIX :
-
     Double tab in vim for no reason
 
     Try to fix the red in first char of last line while code incomplete in vim
 
 CODING TIPS : 
+    You don't have to do memcpy on structures anymore you can do 
+	the following :
 
-    You don't have to do memcpy on structures anymore you can do the following :
-    struct Thing thing = {.id = id, .set = 0};
-    conn->db->rows[id] = thing;
+    	struct Thing thing = {.id = id, .set = 0};
+    	conn->db->rows[id] = thing;
 
-    Difference between calloc and malloc is that malloc doen't initialize the block of mem with zeros it leaves garbage. Also calloc takes two arguments, the number of blocks and their size. calloc takes the number of blocks and the size of each of these. and malloc only takes the size of the block it selects.
+    Difference between calloc and malloc is that malloc doen't initialize 
+	the block of mem with zeros it leaves garbage. Also calloc takes two 
+	arguments, the number of blocks and their size. calloc takes the number 
+	of blocks and the size of each of these. and malloc only takes the size 
+	of the block it selects.
 
-    The prefix "out_" is a good practice to tell : This pointer is gonna be used to modify the content given to it.
 
-    Remember to always size your strings (with defined lengths) to prevent any bug.
+    The prefix "out_" is a good practice to tell : This pointer is gonna 
+	be used to modify the content given to it.
+
+    Remember to always size your strings (with defined lengths) to prevent 
+	any bug.
 
     Segfault is when you try to  access memory that doesn't belong to you.
 
-    Stack
+    STACK
+    	The stack is LIFO used for local variables.
 
-    The stack is LIFO used for local variables.
-    All information required to resume pending functions is stored on the stack.
-    Once a function/method has completed its cycle, the space on the stack used by all variables is freed.
-    The chain of suspended functions calls is the stack, because elements in the stack (function calls) depend on each other.
-    The stack is important to consider in exception handling and thread executions
+    	All information required to resume pending functions is stored on 
+		the stack.
 
-    Heap
+    	Once a function/method has completed its cycle, the space on 
+		the stack used by all variables is freed.
+		
+    	The chain of suspended functions calls is the stack, 
+		because elements in the stack (function calls) depend on each other.
+    	
+		The stack is important to consider in exception handling 
+		and thread executions
 
-    The heap is simply the memory used by programs to store global variables.
-    Elements of the heap (variables) have no dependencies with each other and can be accessed randomly at any time.
-    All global variables are stored in heap memory.
-    All variables dynamically created by the program with "new()" or "malloc()" or similar commands are also stored on the heap.
-    When a function exits the heap is freed and then the stack is freed.
+    HEAP
+		The heap is simply the memory used by programs to store global 
+		variables.
+	
+    	Elements of the heap (variables) have no dependencies with each other 
+		and can be accessed randomly at any time.
+	
+    	All global variables are stored in heap memory.
 
-    C equivalent of "new" is : "malloc(sizeof(struct obj));"
+    	All variables dynamically created by the program with 
+		"new()" or "malloc()" or similar commands are also stored on the heap.
 
-    To access an obj (struct) 's  properties use the -> operator if you're dealing with a pointer and . if you're dealing with "basic" types.
+    	When a function exits the heap is freed and then the stack is freed.
+
+   	C equivalent of "new" is : "malloc(sizeof(struct obj));"
+
+    To access an obj (struct) 's  properties use the -> operator if 
+	you're dealing with a pointer and . if you're dealing 
+	with "basic" types.
 
     Pass objects via pointer (as opposed to by value).
 
-    If you think of an error that might happen at one point in your code while you are writing it, check it with "assert()" it'll either print into the error stream and close the program or do nothing.
-    In C methods are not in the class (struct) so constructor and destructor must be done as if they were (and they are) external functions.
+    If you think of an error that might happen at one point in your code 
+	while you are writing it, check it with "assert()" it'll either print 
+	into the error stream and close the program or do nothing.
+
+    In C methods are not in the class (struct) so constructor and 
+	destructor must be done as if they were (and they are) external 
+	functions.
 
     Whenever malloc() or calloc() is called free() must be too.
+
+	In C there are two basic types of libraries :
+		STATIC
+			A set of .o object files and their functions, and you can
+			treat it like one big .o file when building your programs.
+
+		DYNAMIC
+			Ending in .so, .dll or about one million other ending on OSX,
+			depending on the version and who happened to be working that
+			day (.dylib, .bundle .framework ...). These files are built
+			and then placed in a common location. When you run your program,
+			the OS dynamically loads these files and links them to your 
+			program on the fly.
