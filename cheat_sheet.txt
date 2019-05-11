@@ -449,3 +449,10 @@ CODING TIPS :
 			and then placed in a common location. When you run your program,
 			the OS dynamically loads these files and links them to your 
 			program on the fly.
+	
+	Static libraries -> small to medium-sized projects because they are
+						easier to deal with and work on most OS.
+
+	Dynamic libraries -> good for larger systems, when space is tight,
+						 or if you have a lage number of programs
+						 that use common functionnality.
