@@ -459,3 +459,13 @@ CODING TIPS :
 	Dynamic libraries -> good for larger systems, when space is tight,
 						 or if you have a lage number of programs
 						 that use common functionnality.
+	
+	Function pointers :
+		Pointer to function -> (*function_name)
+
+		If I do 
+			typedef int (*lib_function) (const char *data)
+
+		In "lib_function f = int (*lib_function)(const char *data)"
+		-> f is a function that returns an int and takes a const
+		   string data as a parameter.
