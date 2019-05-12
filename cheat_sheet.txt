@@ -460,6 +460,21 @@ CODING TIPS :
 						 or if you have a lage number of programs
 						 that use common functionnality.
 	
+	dl usually stands for "dynamic loading" in that case :
+		-ldl, dlopen(), dlsym(), dlclose()...
+	
+	Example of compilation commands for a program loading a dynamic lib
+	(linking) :
+		cc -c lib.c -o lib.o (may need -fPIC on some platforms)
+		cc -shared -o lib.so lib.o
+		cc -Wall -g -DNDEBUG prog.c -ldl -o prog
+	
+	WARNING! You might run "cc -Wall -g -DNDEBUG -ldl prog.c -o prog"
+	thinking everything will work but nope. On some platforms the order
+	might change eg. 
+	Debian and Ubuntu need "cc -Wall -g -DNDEBUG prog.c -ldl -o prog"
+
+	
 	Function pointers :
 		Pointer to function -> (*function_name)
 
@@ -469,3 +484,4 @@ CODING TIPS :
 		In "lib_function f = int (*lib_function)(const char *data)"
 		-> f is a function that returns an int and takes a const
 		   string data as a parameter.
+		   
