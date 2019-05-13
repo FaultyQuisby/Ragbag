@@ -487,3 +487,21 @@ CODING TIPS :
 		-> f is a function that returns an int and takes a const
 		   string data as a parameter.
 		   
+
+DATA STRUCTURES :
+    Doubly linked lists :
+        A linked list works by nodes having pointers to their next or previous
+        element. A doubly linked list contains pointers to both, while a singly
+        linked list only points at the next element.
+
+        Advantages :
+            You can do some operations very quickly. Anything that involves
+            inserting or deleting an element will be very fast. They're easy
+            to implement.
+
+        Disavantages :
+            Traversing it involves processing every single pointer along the
+            way. This means that searching, most sorting, and iterating over
+            the elements will be slow. You also can't really jump to random
+            parts of the list. That means if you want the tenth element, you
+            have to go through the first nine elements.
