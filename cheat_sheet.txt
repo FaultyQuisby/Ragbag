@@ -63,6 +63,8 @@ VIM COMMANDS :
     :e 'filename' -> opens 'filename'
 	c^f -> move forward a page
 	c^b -> move backward a page
+    c^] -> jump inside tag
+    c^t -> jump outside tag
 
 SUBSTITUTE :
     :%s/old_WORD/new_WORD/g -> replaces all instances of a word by 
