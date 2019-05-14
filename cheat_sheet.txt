@@ -320,20 +320,10 @@ VIM INSTALL :
 
     cd ~/.vim/bundle  
     git clone https://github.com/w0rp/ale.git
-    install mercurial
-    hg clone https://bitbucket.org/ludovicchabant/vim-gutentags
-
-    (if error do :
-        hg config -e
-        add these lines :
-            [hostsecurity]
-            bitbucket:minimumprotocol=tls1.0
-        hg clone https://bitbucket.org/ludovicchabant/vim-gutentags --insecure)
-
     if not installed already install exhuberant ctags or universal ctags.
+    git clone https://github.com/ludovicchabant/vim-gutentags.git
 
 .VIMRC :
-
     execute pathogen#infect()
     filetype plugin indent on
     set tabstop=4
@@ -347,6 +337,9 @@ VIM INSTALL :
     set colorcolumn=80
     set laststatus=2
     set statusline+=%F
+    set statusline+=%{gutentags#statusline()}
+    let g:gutentags_project_root = ['Makefile']
+    let g:gutentags_cache_dir = '~/.tags_cache'
     syntax on
     highlight ALEError ctermfg=130 cterm=underline
     highlight ALEWarning ctermfg=130 cterm=underline
