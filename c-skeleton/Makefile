@@ -11,6 +11,11 @@ TESTS=$(patsubst %.c,%,$(TEST_SRC))
 TARGET=build/liblcthw.a
 SO_TARGET=$(patsubst %.a,%.so,$(TARGET))
 
+OS=$(shell lsb_release -si)
+ifeq ($(OS), Ubuntu)
+		LDLIBS=-llcthw -lbsd -L./build -lm
+endif
+
 # The Target Build
 all: $(TARGET) $(SO_TARGET) tests
 
@@ -31,9 +36,12 @@ build:
 
 # The Unit Tests
 .PHONY: tests
-tests: CFLAGS += $(TARGET)
+tests: LDLIBS += $(TARGET)
 tests: $(TESTS)
 	sh ./tests/runtests.sh
+
+valgrind:
+		VALGRIND="valgrind --log-file=/tmp/valgring-%p.log" $(MAKE)
 
 # The Cleaner
 clean:
