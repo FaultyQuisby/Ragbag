@@ -65,6 +65,7 @@ VIM COMMANDS :
 	c^b -> move backward a page
     c^] -> jump inside tag
     c^t -> jump outside tag
+    :tags -> summary of all tags browsed
 
 SUBSTITUTE :
     :%s/old_WORD/new_WORD/g -> replaces all instances of a word by 
