@@ -320,6 +320,17 @@ VIM INSTALL :
 
     cd ~/.vim/bundle  
     git clone https://github.com/w0rp/ale.git
+    install mercurial
+    hg clone https://bitbucket.org/ludovicchabant/vim-gutentags
+
+    (if error do :
+        hg config -e
+        add these lines :
+            [hostsecurity]
+            bitbucket:minimumprotocol=tls1.0
+        hg clone https://bitbucket.org/ludovicchabant/vim-gutentags --insecure)
+
+    if not installed already install exhuberant ctags or universal ctags.
 
 .VIMRC :
 
