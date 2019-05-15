@@ -33,6 +33,7 @@ void List_clear_destroy(List * list)
 
 void List_push(List * list, void *value)
 {
+    check(list != NULL, "Invalid list.");
     ListNode *node = calloc(1, sizeof(ListNode));
     check_mem(node);
 
@@ -55,8 +56,11 @@ error:
 
 void *List_pop(List * list)
 {
+    check(list != NULL, "Invalid list.");
     ListNode *node = list->last;
     return node != NULL ? List_remove(list, node) : NULL;
+error:
+    return NULL;
 }
 
 void List_unshift(List * list, void *value)
@@ -91,6 +95,7 @@ void *List_remove(List * list, ListNode * node)
 {
     void *result = NULL;
 
+    check(list != NULL, "Invalid list.");
     check(list->first && list->last, "List is empty.");
     check(node, "node can't be NULL");
 
