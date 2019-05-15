@@ -3,9 +3,14 @@
 
 inline void ListNode_swap(ListNode * a, ListNode * b)
 {
+    check(a != NULL && b != NULL, "Invalid a or b node: %p, %p", a, b);
+
     void *temp = a->value;
     a->value = b->value;
     b->value = temp;
+
+error: // fallthrough
+    return;
 }
 
 int List_bubble_sort(List * list, List_compare cmp)

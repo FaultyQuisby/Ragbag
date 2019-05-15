@@ -8,6 +8,8 @@ List *List_create()
 
 void List_destroy(List * list)
 {
+    check(list != NULL, "Invalid NULL list on destroy.");
+
     LIST_FOREACH(list, first, next, cur) {
         if (cur->prev) {
             free(cur->prev);
@@ -16,6 +18,9 @@ void List_destroy(List * list)
 
     free(list->last);
     free(list);
+
+error:
+    return;
 }
 
 void List_clear(List * list)
