@@ -563,6 +563,10 @@ CODING TIPS :
         into the code where it is used with the intention of improving
         execution time.	   
         As for the "static" keyword, see the above definition.
+        
+        In a header file they work similar to #define macros but they're
+        cleaner and easier to write. Use this if you need to create a block
+        of code for a macro and you don't need code generation.
 
 DATA STRUCTURES :
     Doubly linked lists :
