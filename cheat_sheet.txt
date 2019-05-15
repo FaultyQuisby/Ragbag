@@ -508,9 +508,23 @@ DATA STRUCTURES :
             inserting or deleting an element will be very fast. They're easy
             to implement.
 
-        Disavantages :
+        Disadvantages :
             Traversing it involves processing every single pointer along the
             way. This means that searching, most sorting, and iterating over
             the elements will be slow. You also can't really jump to random
             parts of the list. That means if you want the tenth element, you
             have to go through the first nine elements.
+    
+    Dynamic Arrays :
+        This is an array that grows on its own, and have most of the same 
+        features as a linked list.        
+        It's an array of void ** pointers that's pre-allocated in one shot and
+        that point at the data.
+
+        Advantages :
+            It will usually take up less space, run faster, and has other 
+            beneficial properties, compared to the liked list.
+
+        Disadvantages : 
+            Very slow removal from the front, with a solution to just do it
+            at the end.
