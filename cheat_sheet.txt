@@ -495,7 +495,74 @@ CODING TIPS :
 		In "lib_function f = int (*lib_function)(const char *data)"
 		-> f is a function that returns an int and takes a const
 		   string data as a parameter.
-		   
+
+    Storage classes :
+        It defines the scope and life-time of variables.
+        There are four different storage classes in C :
+            static :
+                It generally denotes static storage, meaning that it is 
+                allocated in the static data area of the program, 
+                and not on the stack or heap. 
+                Also, it generally limits the visibility of the name 
+                to a certain area of the code.
+
+                If used on a variable or function of global scope, 
+                then it generally means that the function or variable 
+                can only be used by other functions within the same file, 
+                as opposed to "extern" which means that the variable and 
+                function can be used from other files.
+
+                If used on a local variable within a function, it means that 
+                the variable maintains its value between function calls 
+                (since it is allocated statically and not on the stack).   
+
+            extern :
+                Extends the visibility of the variable/function to the whole 
+                program.
+
+                When extern is used with a variable it is only declared, not
+                defined.
+
+                Since functions are visible throughout the program by default,
+                the use of extern is not needed in function declaration or
+                definition. It is redundant.
+
+                As an exception, when an extern variable is declared with
+                initialization, it is taken as the definition of the variable
+                as well.
+                
+
+            register :
+                The keyword register hints to the compiler that a given
+                variable can be put in a register. 
+                It's the compiler's choice to do it or not. 
+                In fact they usually do themselves when needed.
+
+                If you use & operator with a register variable then 
+                the compiler may give an error or warning (depending upon 
+                the compiler you are using), because when we say a variable 
+                is a register, it may be stored in a register instead of 
+                memory and accessing address of a register is invalid.
+
+                register keyword can be used with pointer variables.
+                You can do this :
+                    register int *a = &i;
+
+                Register is a storage class, and C doesn’t allow multiple
+                storage class specifiers for a variable. So, register cannot 
+                be used with static.
+
+            auto :
+                Indicates a variable is local to its block.
+                C variables already default to that.
+            
+
+    Static inline functions :
+        
+	    The keyword "inline" tells the GCC compiler to build the function
+        into the code where it is used with the intention of improving
+        execution time.	   
+        As for the "static" keyword, see the above definition.
 
 DATA STRUCTURES :
     Doubly linked lists :
