@@ -595,7 +595,55 @@ DATA STRUCTURES :
         Advantages :
             It will usually take up less space, run faster, and has other 
             beneficial properties, compared to the liked list.
+            
+            Iteration :
+                You can just use a basic for-loop and DArray_count with
+                DArray_get, and you're done. No special macros needed,
+                and it's faster because you aren't walking through pointers
+                (compared to a list).
+
+            Indexing :
+                You can use DArray_get and DArray_set to access any element at
+                random, but with a List you have to go through N elements to
+                get N+1.
+
+            Destroying :
+                You can just free the struct and the contents in two operations
+                A list requires a series of free calls and walking every
+                element.
+
+            Cloning :
+                You can also clone it in just two operations (plus whatever
+                it's storing) by copying the struct and contents. A list
+                again requires walking through the whole thing and copying
+                every ListNode plus its value.
+
+
+            Sorting :
+                List is horrible if you need to keep the data sorted. A DArray
+                opens up a whole class of great sorting algorithms, because
+                you can access elements randomly.
+                
+            Large Data:
+                If you need to keep around a lot of data, then a DArray wins
+                since its base, contents, takes up less memory than the same
+                number of ListNode structs.
 
         Disadvantages : 
             Very slow removal from the front, with a solution to just do it
             at the end.
+            
+            Insert and remove on the front (shift). A DArray needs special
+            treatment to be able to do this efficiently, and usually it has
+            to do some copying.
+
+            Splitting or joining :
+                A List can just copy some pointers and it's done, but with
+                DArray, you have to copy all of the arrays involved.
+
+            Small data:
+                If you need to store a few elements, then typically the storage
+                will be less in a List than a generic DArray. This is because
+                the DArray needs to expand the backing store to accommodate
+                future inserts, while a List only makes what it needs.
+            
