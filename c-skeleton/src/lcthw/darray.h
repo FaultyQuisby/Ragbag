@@ -2,7 +2,7 @@
 #define _DArray_h
 #include <stdlib.h>
 #include <assert.h>
-#include <lcthw/dbg.h>
+#include "dbg.h"
 
 typedef struct DArray {
     int end;
@@ -38,6 +38,7 @@ void DArray_clear_destroy(DArray * array);
 
 static inline void DArray_set(DArray * array, int i, void *el)
 {
+    check(array != NULL, "Invalid array.");
     check(i < array->max, "darray attempt to set past max");
     if (i > array->end)
         array->end = i;
@@ -48,6 +49,7 @@ error:
 
 static inline void *DArray_get(DArray * array, int i)
 {
+    check(array != NULL, "Invalid array.");
     check(i < array->max, "darray attempt to get past max");
     return array->contents[i];
 error:
@@ -56,15 +58,19 @@ error:
 
 static inline void *DArray_remove(DArray * array, int i)
 {
+    check(array != NULL, "Invalid array.");
     void *el = array->contents[i];
 
     array->contents[i] = NULL;
 
     return el;
+error: // fallthrough
+    return NULL;
 }
 
 static inline void *DArray_new(DArray * array)
 {
+    check(array != NULL, "Invalid array.");
     check(array->element_size > 0,
             "Can't use DArray_new on 0 size darrays.");
 

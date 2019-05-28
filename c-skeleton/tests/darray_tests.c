@@ -72,15 +72,18 @@ char *test_remove()
 char *test_expand_contract()
 {
     int old_max = array->max;
+    int rc = 0;
     DArray_expand(array);
     mu_assert((unsigned int)array->max == old_max + array->expand_rate,
             "Wrong size after expand.");
 
-    DArray_contract(array);
+    rc = DArray_contract(array);
+    mu_assert(rc != -1, "Failed to contract.");
     mu_assert((unsigned int)array->max == array->expand_rate + 1,
             "Should stay at the expand_rate at least.");
 
-    DArray_contract(array);
+    rc = DArray_contract(array);
+    mu_assert(rc != -1, "Failed to contract.");
     mu_assert((unsigned int)array->max == array->expand_rate + 1,
             "Should stay at the expand_rate at least.");
 
