@@ -1,0 +1,6 @@
+Sort vim shortcuts by theme.
+
+find out what :qa and :wa do in vim
+find out what "ar rcs" and "ranlib" do in the Makefile
+check out and-HTTPD (that's where the makefile regex comes from)
+
