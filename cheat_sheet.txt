@@ -67,6 +67,29 @@ VIM COMMANDS :
     c^t -> jump outside tag
     :tags -> summary of all tags browsed
 
+FILE PERMISSIONS :
+
+    0 -> No Permission -> -
+    1 -> Execute -> -x
+    2 -> Write -> -x-
+    3 -> Execute-Write -> -wx
+    4 -> Read -> r-
+    5 -> Read-Execute -> r-x
+    6 -> Read-Write -> rw-
+    7 -> Read-Write-Execute -> rwx
+
+    drwxrwxrwx 2 user user  6 Jan 7 2015 Desktop
+    -rw-rw-r-- 1 user user  0 Feb 16 14:17 file1
+    -rw-r--r-- 1 user wheel 0 Feb 16 14:22 file2
+    
+    Owner, Group, All users
+
+    chmod u+x file_name
+    chmod g+rw file_name
+    chmod o-w file_name
+    chmod u=rxw,g=rx,o= file_name
+    chmod 774 file_name
+
 SUBSTITUTE :
     :%s/old_WORD/new_WORD/g -> replaces all instances of a word by 
 							   the new specified one
