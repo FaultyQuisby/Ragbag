@@ -1,0 +1,246 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 STIXVariants-Regular;\f2\fnil\fcharset0 STIXGeneral-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;}
+{\*\expandedcolortbl;;\cssrgb\c19608\c19608\c19608;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww14000\viewh15240\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
+
+\f0\fs96 \cf0 Computer Graphics Maths\
+
+\fs48 Math Operations on Points and Vectors.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 WARNING : Cpp can use operator overloading, C cannot !
+\fs24 \
+
+\fs48 \
+Elements : \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \
+- Vector class\
+- Point\
+- Norm/Magnitude\
+- Scalar Projection\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs48 \cf0 Operations : \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \
+- get a vector\'92s length\
+- normalize a vector\
+- dot product/scalar product of two vectors\
+- cross product of two vectors\
+- vector/point addition and subtraction\
+\
+Definitions :\
+\
+Vector class :\
+\
+Template<typename T>\
+Class Vec3\
+\{\
+Public:\
+	// 3 most basic ways of initializing a vector\
+	vec3() : x(T(0)), y(T(0)), z(T(0)) \{\}\
+	vec3(const T &xx) : x(xx), y(xx), z(xx) \{\}\
+	vec3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) \{\}\
+	T x, y, z;\
+\};\
+\
+Operation implementations :\
+\
+Vector length :\
+A vector can be seen as an array starting from one point and finishing to another. The vector itself indicates not only the direction of point B from A but also can be used to find out the distance (norm/magnitude) between A and B.\
+This is given by the length of a vector which can be easily computed with the following formula :\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+||
+\f2\i V
+\f1\i0 ||
+\f2 =
+\f0 sqrt(
+\f2\i V
+\i0 .
+\i x
+\i0 \uc0\u8727 
+\i V
+\i0 .
+\i x 
+\i0 + 
+\i V
+\i0 .
+\i y
+\i0 \uc0\u8727 
+\i V
+\i0 .
+\i y 
+\i0 + 
+\i V
+\i0 .
+\i z
+\i0 \uc0\u8727 
+\i V.z)
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 In maths, the double bar (||V||) notation indicates the length of a vector (norm/magnitude).\
+\
+T length(const Vec3<t> &v)\
+\{\
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));\
+\}\
+\
+Vector normalisation :\
+A normalised vector, is a vector whose length is 1. Such vector is also called a unit vector. The mathematical operation is the following :\
+
+\f2\fs35\fsmilli17760 V^ = V / ||V||
+\fs24 \
+
+\f0 Note that the C++ implementation can be optimised. First we only normalise the vector if its length is greater than 0 (as dividing by 0 is forbidden). We then compute a temporary variable which is the invert of the vector length, and multiply each coordinate of the vector with this value rather than dividing them with the vector length. Multiplications are less costly than division in a program.\
+Euclidian norm implementation :\
+\
+Void normalize(Vec3<T> &v)\
+\{\
+	T len2 = v.x * v.x + v.y * v.y + v.z * v.z;\
+	if (len2 > 0)\
+	\{\
+		T invLen = 1 / sqrt(len2);\
+		x *= invLen;\
+		y *= invLen;\
+		z *= invLen;\
+	\}\
+\}\
+\
+Dot product/Scalar product :\
+The dot product or scalar product requires two vectors A and B and can be seen as the projection of one vector onto the other.\
+The result of a dot product is a real number (a float or double in programming). A dot product between two vectors is denoted with the dot sign :\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+A
+\i0 \uc0\u8901 
+\i B
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0  (It can also be sometimes written as 
+\f2\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+<
+\i A
+\i0 ,
+\i B
+\i0 >
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 )\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 The dot product consists of multiplying each element of the A vector with its counterpart from vector B and taking the sum of each product. For 3D :\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+A
+\i0 \uc0\u8901 
+\i B
+\i0 =
+\i A
+\i0 .
+\i x
+\i0 \uc0\u8727 
+\i B
+\i0 .
+\i x 
+\i0 + 
+\i A
+\i0 .
+\i y
+\i0 \uc0\u8727 
+\i B
+\i0 .
+\i y 
+\i0 + 
+\i A
+\i0 .
+\i z
+\i0 \uc0\u8727 
+\i B
+\i0 .
+\i z
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Note that this is quite similar to the way we compute the length (distance) of a vector. If we take the square root of the dot product between two vectors that are equal (A = B), then what we get is the length of the vector. Thus we can write :\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+||
+\f2\i V
+\f1\i0 ||
+\f2\fs25\fsmilli12556 \cf2 2
+\fs35\fsmilli17760 \cf2 =
+\i V
+\i0 \uc0\u8901 
+\i V
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+T dot(const Vec3<T> &a, const Vec3<T> &b)\
+\{\
+	return (a.x * b.x + a.y * b.y + a.z * b.z);\
+\}\
+\
+The dot product of two vectors relates to the cosine of the angle between the two vectors. If the two vectors A and B have unit length then the result of the dot product is the cosine of the angle subtended by the two vectors. \
+If B is a unit vector then the product 
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+A
+\i0 \uc0\u8901 
+\i B 
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 gives 
+\f1\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+||
+\f2\i A
+\f1\i0 ||
+\f2 cos(
+\i \uc0\u952 
+\i0 )
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 , The magnitude of the projection of A in the direction of B, with a minus sign if the direction is opposite. This is called the scalar projection of A onto B.\
+When neither A nor B is a unit vector, we can write that (
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+A
+\i0 \uc0\u8901 
+\i B)
+\i0 /
+\f1 ||
+\f2\i B
+\f1\i0 ||\
+
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 When the two vectors are normalised then taking the arc cosine of the dot product gives you the angle 
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+\uc0\u952 
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+Between the two vectors : 
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+\uc0\u952 
+\i0 =acos(
+\i A
+\i0 \uc0\u8901 
+\i B
+\i0 /
+\f1 ||
+\f2\i A
+\f1\i0 ||||
+\f2\i B
+\f1\i0 ||
+\f2 ) 
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 or 
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+\uc0\u952 
+\i0 =acos(
+\i A
+\f0\i0 ^
+\f2 \'a0\uc0\u8901 
+\i B
+\f0\i0 ^)
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\
+Cross product :\
+Addition and subtraction :\
+\
+}
