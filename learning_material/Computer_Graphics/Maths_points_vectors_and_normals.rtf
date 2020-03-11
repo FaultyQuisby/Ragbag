@@ -1,0 +1,147 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 STIXGeneral-Regular;}
+{\colortbl;\red255\green255\blue255;\red111\green111\blue111;\red255\green255\blue255;\red255\green255\blue254;
+\red255\green255\blue254;\red38\green38\blue38;\red38\green38\blue38;\red255\green255\blue255;\red38\green38\blue38;
+}
+{\*\expandedcolortbl;;\cssrgb\c50980\c50980\c50980;\cssrgb\c100000\c100000\c100000;\cssrgb\c100000\c100000\c99833;
+\cssrgb\c100000\c100000\c99785\c0;\cssrgb\c19608\c19608\c19608;\cssrgb\c19630\c19630\c19605;\cssrgb\c100000\c100000\c100000\c0;\cssrgb\c19629\c19629\c19605;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww13980\viewh15280\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
+
+\f0\fs96 \cf0 Computer Graphics Maths\
+
+\fs48 Points vectors and normals.\
+
+\fs96 \
+\pard\pardeftab720\sl360\partightenfactor0
+
+\fs32 \cf2 \cb3 \expnd0\expndtw0\kerning0
+"Geometry, is a branch of mathematics concerned with questions of shape, size, relative position of figures, and the properties of space." \cf4 \cb5 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs48 \cf0 Elements :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \
+- Points\
+- Vectors\
+- Normals\
+- Coordinate Systems\
+- Matrices\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs48 \cf0 Operations :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \
+- Transformations\
+- Trigonometric functions\
+- Matrix operations\
+\
+\
+Definitions :\
+\
+Linear algebra : Linear algebra is a branch of mathematics that has to do with the study of vectors.\
+\
+Vector : Can be represented as an array of numbers, which can assume any desired length, also sometimes called a tuple (n-tuple). I means a direction (and some correponding magnitude, or size) in three-dimensional space.\
+possible notation : 
+\f1\i\fs35\fsmilli17760 \cf6 \cb3 \expnd0\expndtw0\kerning0
+V
+\i0 =(
+\i a
+\i0 , 
+\i b
+\i0 , 
+\i c
+\i0 , 
+\i d
+\i0 , 
+\i e
+\i0 , 
+\i f
+\i0 )
+\f0\fs24 \cf7 \cb8  where (a, b, c, d, e, f) are real numbers.\
+\
+Vector length : When it is equal to 1 the vector is normalised.\
+\
+Normalised vector : The act of normalising a vector involves altering the vector such that its length becomes 1, but its direction remains unchanged. Most of the time, we will want our vectors to be normalised (except when the length is meaningful eg. When we need to do operation on the distance between to points).\
+\cf0 \cb1 \kerning1\expnd0\expndtw0 \
+Point : A point is a portion in a three-dimensional space. Also represented by the aforementioned tuple notation.\
+possible notation : 
+\f1\i\fs35\fsmilli17760 \cf6 \cb3 \expnd0\expndtw0\kerning0
+P
+\i0 =(
+\i x, y, z
+\i0 )
+\f0\fs24 \cf7 \cb8  where (x, y, z) are real numbers.\cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf7 \cb8 \expnd0\expndtw0\kerning0
+\
+Homogeneous point : Sometimes it is necessary to add a fourth element for mathematical convenience.\
+
+\f1\i\fs35\fsmilli17760 \cf6 \cb3 Ph
+\i0 =(
+\i x
+\i0 , 
+\i y
+\i0 , 
+\i z, w
+\i0 )
+\f0\fs24 \cf7 \cb8   \
+They are used when it comes to multiplying points with matrices.\
+\
+Normals : A normal is the technical term used in CG (and Geometry) to describe the orientation of a surface of a geometric object at a point on that surface. The surface normal to a surface at point P can be seen as the vector perpendicular to a plane tangent to the surface at P. Normals are like vectors except that they do not transform the same way.\
+\
+Example of class defining Vectors, Points and Normals (Vec3) :\
+\
+template<typename T>\
+class Vec3\
+\{\
+public:\
+	// 3 most basic ways of initialising a vector\
+	Vec3() : x(T(0)), y(T(0)), z(T(0)) \{\}\
+	Vec3(const T &xx) : x(xx), y(xx), z(xx) \{\}\
+	Vec3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) \{\}\
+	T x, y, z;\
+\};\
+\
+typedef Vec3<float> Vec3f;\
+\
+Vec3<float> a;\
+Vec3f b;
+\f1 \cf9 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+Linear transformations :\
+\
+Translation : Is a linear transformation of the original point. Applied to a vector it has no meaning, because where the vector begins (where it is centered) is not important, all \'ab\'a0arrows\'a0\'bb of the same length, pointing in the same direction are equivalent.\
+\
+Rotation : \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1\i\fs35\fsmilli17760 \cf6 \expnd0\expndtw0\kerning0
+P
+\i0 \uc0\u8594 
+\i Translate
+\i0 \uc0\u8594 
+\i P
+\fs25\fsmilli12556 T
+\f0\i0\fs35\fsmilli17760 \
+
+\f1\i V
+\i0 \uc0\u8594 
+\i Rotate
+\i0 \uc0\u8594 
+\i V
+\fs25\fsmilli12556 T\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 The subscripted letter T stands for \'ab\'a0transformed\'a0\'bb.}
