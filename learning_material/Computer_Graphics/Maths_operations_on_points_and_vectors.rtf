@@ -1,9 +1,9 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 STIXVariants-Regular;\f2\fnil\fcharset0 STIXGeneral-Regular;
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 STIXVariants-Regular;\f2\fnil\fcharset0 STIXGeneral-Regular;
 }
 {\colortbl;\red255\green255\blue255;\red38\green38\blue38;}
 {\*\expandedcolortbl;;\cssrgb\c19608\c19608\c19608;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww14000\viewh15240\viewkind0
+\paperw11900\paperh16840\margl1440\margr1440\vieww17520\viewh21580\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
 
 \f0\fs96 \cf0 Computer Graphics Maths\
@@ -16,20 +16,20 @@
 
 \fs48 \
 Elements : \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\fs24 \cf0 \
+\fs24 \
 - Vector class\
 - Point\
 - Norm/Magnitude\
 - Scalar Projection\
+- Pseudo vector\
+- Inward-pointing normal\
+- Outward-pointing normal\
 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\fs48 \cf0 Operations : \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\fs48 Operations : \
 
-\fs24 \cf0 \
+\fs24 \
 - get a vector\'92s length\
 - normalize a vector\
 - dot product/scalar product of two vectors\
@@ -96,11 +96,13 @@ T length(const Vec3<t> &v)\
 \
 Vector normalisation :\
 A normalised vector, is a vector whose length is 1. Such vector is also called a unit vector. The mathematical operation is the following :\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f2\fs35\fsmilli17760 V^ = V / ||V||
+\f2\fs35\fsmilli17760 \cf0 V^ = V / ||V||
 \fs24 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
-\f0 Note that the C++ implementation can be optimised. First we only normalise the vector if its length is greater than 0 (as dividing by 0 is forbidden). We then compute a temporary variable which is the invert of the vector length, and multiply each coordinate of the vector with this value rather than dividing them with the vector length. Multiplications are less costly than division in a program.\
+\f0 \cf0 Note that the C++ implementation can be optimised. First we only normalise the vector if its length is greater than 0 (as dividing by 0 is forbidden). We then compute a temporary variable which is the invert of the vector length, and multiply each coordinate of the vector with this value rather than dividing them with the vector length. Multiplications are less costly than division in a program.\
 Euclidian norm implementation :\
 \
 Void normalize(Vec3<T> &v)\
@@ -173,8 +175,8 @@ A
 ||
 \f2\i V
 \f1\i0 ||
-\f2\fs25\fsmilli12556 \cf2 2
-\fs35\fsmilli17760 \cf2 =
+\f2\fs25\fsmilli12556 2
+\fs35\fsmilli17760 =
 \i V
 \i0 \uc0\u8901 
 \i V
@@ -237,10 +239,112 @@ Between the two vectors :
 \f0\i0 ^
 \f2 \'a0\uc0\u8901 
 \i B
-\f0\i0 ^)
+\f0\i0 ^)\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs24 \cf2 The dot product is a very important operation in 3D. It can be used for many things. As a test of orthogonality. When two vectors are perpendicular to each other, the result of the dot product between these two vectors is 0. When the two vectors are pointing in opposite directions, the dot product returns -1. When they are pointing the exact same direction, it returns 1. It is also used intensively	to find out the angle between two vector and the axis of a coordinate system (which is useful when the coordinates of a vector are converted to spherical coordinates).
+\fs35\fsmilli17760 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
 \fs24 \cf0 \kerning1\expnd0\expndtw0 \
 \
 Cross product :\
+\
+The cross product is also an operation on two vectors, but to the difference of the dot product which returns a number, the cross product returns a vector. The particularity of this operation is that the vector resulting from the cross product is perpendicular to the other two. The cross product operation is written using the  following syntax :\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+C
+\i0 =
+\i A
+\i0 \'d7
+\i B
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 To compute the cross product we will need to implement the following formula :\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+C
+\fs25\fsmilli12556 X 
+\i0\fs35\fsmilli17760 = 
+\i A
+\fs25\fsmilli12556 Y
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 Z 
+\i0\fs35\fsmilli17760 \uc0\u8722  
+\i A
+\fs25\fsmilli12556 Z
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 Y
+\f0\i0\fs35\fsmilli17760 \
+
+\f2\i C
+\fs25\fsmilli12556 Y 
+\i0\fs35\fsmilli17760 = 
+\i A
+\fs25\fsmilli12556 Z
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 X 
+\i0\fs35\fsmilli17760 \uc0\u8722  
+\i A
+\fs25\fsmilli12556 X
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 Z
+\f0\i0\fs35\fsmilli17760 \
+
+\f2\i C
+\fs25\fsmilli12556 Z 
+\i0\fs35\fsmilli17760 = 
+\i A
+\fs25\fsmilli12556 X
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 Y 
+\i0\fs35\fsmilli17760 \uc0\u8722  
+\i A
+\fs25\fsmilli12556 Y
+\i0\fs35\fsmilli17760 \uc0\u8727 
+\i B
+\fs25\fsmilli12556 X
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 The vectors A and B define a plane and the resulting vector C is perpendicular to that plane.This is particularly useful to create coordinate systems.\
+\
+template<typename T>\
+Vec3<T> cross(const Vec3<T> &a, const Vec3<T> &b)\
+\{\
+	return Vec3<T>(\
+		a.y * b.z - a.z * b.y,\
+		a.z * b.x - a.x * b.z,\
+		a.x * b.y - a.y * b.x);\
+\}\
+\
+The cross product is anti-commutative (swapping the position of any two arguments negates the result) : if AxB=C then BxA=-C\
+When you compute a cross product between vectors you will always get the same unique solution. For instance if A = (1, 0, 0) and B = (0, 1, 0), C can only be (0, 0, 1). You should care about the handedness of the coordinate system because if the result of the computation is always the same, the way you will draw the resulting vector however, depends on the handedness of your coordinate system. In the case of a right-hand coordinate system, if you align the index finger along the A vector (for example the tangent at a point on the surface) and the middle finger along the B vector (the bitangent if you try to figure out the orientation of a normal), the thumb will point in the direction of the C vector (the normal).\
+\
+In mathematics, the result of a cross product is called a pseudo vector. The order of the vector in the cross product operation is important when surface normals are computed from the tangent and bitangent at the point where the normal is computed. Depending on this order, the resulting normal can either be pointing towards the interior of the surface (inward-pointing normal) or away from it (outward-pointing normal).\
+\
 Addition and subtraction :\
+\
+Other mathematical operations on points are usually straightforward. A multiplication of a vector by a scalar or another vector gives a point. We can add two vectors to each other, subtract then, divide them, etc. Note that some 3D APIs make the distinction between points, normals and vectors. Technically they are subtle differences between each of them which can justify to create three separate classes/structs. \
+For example: normals are not transformed like points and vectors, subtracting two points technically gives a vector, adding a vector to another vector or a point gives a point, etc.\
+\
+template<typename T>\
+Class Vec3\
+\{\
+Public:\
+	\'85\
+	Vec3<T> add (const Vec3<T> &v1, const Vec3<T> &v2) const\
+	\{ return (Vec3<T>(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z)); \}\
+	Vec3<T> subtract(const Vec3<T> &v1, const Vec3<T> &v2) const\
+	\{ return (Vec3<T>(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)); \}\
+	Vec3<t> multiply(const Vec3<T> &v, const T &r) const\
+	\{ return Vec3<T>(v.x * r, v.y * r, v.z * r)); \}\
+\};\
 \
 }
