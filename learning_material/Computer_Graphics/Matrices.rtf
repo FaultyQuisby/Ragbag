@@ -1,0 +1,387 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 STIXSizeOneSym-Regular;\f2\fnil\fcharset0 STIXGeneral-Regular;
+\f3\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red251\green0\blue7;}
+{\*\expandedcolortbl;;\cssrgb\c19608\c19608\c19608;\cssrgb\c100000\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17520\viewh22400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\qc\partightenfactor0
+
+\f0\fs96 \cf0 Computer Graphics Maths\
+
+\fs48 Matrices.
+\fs24 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs48 \cf0 \
+Elements : \
+
+\fs24 \
+- Matrix\
+- Square matrices\
+- Coefficient (entry, element)\
+- Access operator/ Accessor\
+\
+
+\fs48 Operations : \
+
+\fs24 \
+- translate\
+- scale\
+- rotate\
+- Matrix product\
+\
+Definitions :\
+\
+Matrix :\
+A matrix is a way of combining all the transformations (scale, rotation, translation) into one single structure. Multiplying a point or a vector by this structure (the matrix) gives us a transformed point or vector.\
+\
+```\
+Matrix4f M(\'85); //set the matrix for translation, rotation, scale\
+Vec3f P = Vec3f(1, 1, 1);\
+Vec3f Ptransformed = P * M; // do everything at once, translate, rotate, scale\
+```\
+\
+Matrices often appear as two-dimensional array of numbers. To define a two-dimensional array of numbers we use the standard notation m x n where m and n are two numbers that represent the size of this array. M and n respectively represent the number of rows and columns of the matrix. Here is an example of a a [3x5] matrix : \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+\uc0\u9121  
+\f2 \cf2 1  3  7  9  0 
+\f1 \cf2 \uc0\u9124 \cf2 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \uc0\u9122  
+\f2 \cf2 3  3  0  8  3  
+\f1 \cf2 \uc0\u9122 \cf2 \
+\uc0\u9123  
+\f2 \cf2 9  1  0  0  1 
+\f1 \cf2 \uc0\u9126 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+The numbers of the matrix are the matrix coefficients (you might come across the term entry or element but coefficient is often used in CG) and we usually use the subscripts I, j to point a particular coefficient in the matrix. Matrices themselves are most of the time written with capital letters (M, A, B, etc).\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs28 \cf2 \expnd0\expndtw0\kerning0
+M
+\fs19\fsmilli9892 ij 
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 where
+\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+ 
+\f2\i\fs28 \cf2 i 
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 is the row and
+\f2\fs22\fsmilli11200 \cf2 \expnd0\expndtw0\kerning0
+ 
+\i\fs28 j 
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 is the column.
+\f2\fs22\fsmilli11200 \cf2 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+In CG we are mostly using matrices which are said to be squared, that is where m and n are equal. Typically in CG, we will be interested in 3x3 or 4x4 matrices.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Example (template mechanism is used in case we need float or double precision) : \
+\
+```\
+template<typename T>\
+class Matrix44\
+\{\
+Public:\
+	Matrix44() \{\}\
+	const T* operator [] (uint8_t I) const \{ return (m[I]); \}\
+	T* operator [] (uint8_t I) \{ return (m[I]); \}\
+	// initialise the coefficients of the matrix with the coefficients of the identity matrix\
+	T m[4][4] = \{\{1, 0, 0, 0\}, \{0, 1, 0, 0\}, \{0, 0, 1, 0\}, \{0, 0, 0, 1\}\};\
+\};\
+\
+Typedef Matrix44<float> Matrix44f;\
+```\
+\
+WARNING : C++ advice only\
+These operators in the Matrix44 class:\
+```\
+const T* operator [] (uint8_t I) const \{ return (m[I]); \}\
+T* operator [] (uint8_t I) \{ return (m[I]); \}\
+```\
+\
+Are sometimes called access operator or accessor. They are used to access the coefficients of the matrix without having to access explicitly the member variable m[4][4]. Typically, you would access the coefficients that way :\
+\
+```\
+Matrix44f mat;\
+Mat.m[0][3] = 1.f;\
+```\
+\
+But with the access operators, you can write:\
+```\
+Matrix44f mat;\
+mat[0][3] = 1.f;\
+```\
+\
+\
+Operation implementations :\
+\
+Matrix product :\
+Matrices can be multiplied with each other, and this operation is at the heart of the point or vector-matrix transformation process. The result of a matrix multiplication (the technical term is matrix product, the product of two matrices) is another matrix:\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\i\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+M
+\i0\fs25\fsmilli12556 3
+\f0\fs35\fsmilli17760 \cf2  
+\f2 =
+\f0  
+\f2\i \cf2 M
+\i0\fs25\fsmilli12556 1
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0\fs25\fsmilli12556 2
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 A matrix defines a concise way, a combination of linear transformations that can be applied to points and vectors. A matrix multiplication is a way of combining in one matrix the effect of two other matrices. In other words, the transformation that each matrix M1 and M2 would operate on a point or a vector can be combined in one sigle matrix M3.\
+An important rule is that two matrices M1 and M2 can only be multiplied if the number of columns in M1 is equal to the number of rows in M2. In other words if two matrices can be written as m x p and p x n they can be multiplied and it will give a matrix of size m x n. Two matrix p x m and n x p can not be multiplied because m and n are not equal. A 4x2 and 2x3 matrices can be multiplied and will give a 4x3 matrix. The multiplication of two 4x4 matrices gives a 4x4 matrix.\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+[
+\i \cf2 M
+\i0 \cf2 \'d7
+\i \cf2 P
+\i0 \cf2 ]\uc0\u8727 [
+\i \cf2 P
+\i0 \cf2 \'d7
+\i \cf2 N
+\i0 \cf2 ]=[
+\i \cf2 M
+\i0 \cf2 \'d7
+\i \cf2 N
+\i0 \cf2 ]
+\f0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+A matrix multiplication is a mathematical operation on the coefficients of the two input matrices. Notation wise, we use the subscripts i and j to denote these row and column indices. So imagine that we want to find out what\'92s the value of the coefficient Mi,j in the matrix M3. Let\'92s say that i=1 and j=2 (note that index 0 indicates either the first row or the first column of the matrix. Index 3 indicates the last row or column. Arrays start at index 0). To compute M3(1,2) we select all the coefficients of the second row in M1 (where M1 is a 4x4 matrix) and all the coefficients of the third column in M2 (where M2 is also a 4x4 matrix). That gives us two sequences of four numbers that we will multiply with each other and sum up in the following way:\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs35\fsmilli17760 \cf2 \expnd0\expndtw0\kerning0
+\
+		\uc0\u9121  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 00  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 01  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 02  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 03 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9124 				\u9121  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 00  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 01  
+\i\fs35\fsmilli17760 \cf3 c
+\i0\fs25\fsmilli12556 02  
+\i\fs35\fsmilli17760 \cf2 c
+\i0\fs25\fsmilli12556 03 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9124 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\i \cf2 M
+\i0 \cf2 1=
+\f1 \cf2 		\uc0\u9122  
+\f2\i \cf3 c
+\i0\fs25\fsmilli12556 10  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 11  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 12  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 13 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9125 
+\f3 		
+\f2\i \cf2 M
+\i0 \cf2 2=
+\f1 \cf2 		\uc0\u9122  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 10  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 11  
+\i\fs35\fsmilli17760 \cf3 c
+\i0\fs25\fsmilli12556 12  
+\i\fs35\fsmilli17760 \cf2 c
+\i0\fs25\fsmilli12556 13  
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9122 \cf2 \
+		\uc0\u9122  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 20  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 21  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 22  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 23 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9125 		
+\f3 		
+\f1 \uc0\u9122  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 20  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 21  
+\i\fs35\fsmilli17760 \cf3 c
+\i0\fs25\fsmilli12556 22  
+\i\fs35\fsmilli17760 \cf2 c
+\i0\fs25\fsmilli12556 23  
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9122 \cf2 \
+\pard\pardeftab720\partightenfactor0
+\cf2 		\uc0\u9123  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 30  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 31  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 32  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 33 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9126 				\u9123  
+\f2\i \cf2 c
+\i0\fs25\fsmilli12556 30  
+\i\fs35\fsmilli17760 c
+\i0\fs25\fsmilli12556 31  
+\i\fs35\fsmilli17760 \cf3 c
+\i0\fs25\fsmilli12556 32  
+\i\fs35\fsmilli17760 \cf2 c
+\i0\fs25\fsmilli12556 33 
+\f1\fs35\fsmilli17760 \cf2 \uc0\u9126 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\i \cf2 		M
+\i0 \cf2 1
+\fs25\fsmilli12556 \cf2 10
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 02
+\fs35\fsmilli17760 \cf2 +\
+
+\i \cf2 M
+\i0 \cf2 3
+\fs25\fsmilli12556 \cf2 12
+\fs35\fsmilli17760 \cf2 =	
+\i \cf2 M
+\i0 \cf2 1
+\fs25\fsmilli12556 \cf2 11
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 12
+\fs35\fsmilli17760 \cf2 +\
+		
+\i \cf2 M
+\i0 \cf2 1
+\fs25\fsmilli12556 \cf2 12
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 22
+\fs35\fsmilli17760 \cf2 +\
+
+\i \cf2 		M
+\i0 \cf2 1
+\fs25\fsmilli12556 \cf2 13
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 32\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs35\fsmilli17760 \cf2 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\i \cf2 		M
+\i0 \cf2 1
+\i\fs25\fsmilli12556 \cf2 i
+\i0 \cf2 0
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 0
+\i \cf2 j
+\i0\fs35\fsmilli17760 \cf2 +\
+
+\i \cf2 M
+\i0 \cf2 3
+\i\fs25\fsmilli12556 \cf2 ij
+\i0\fs35\fsmilli17760 \cf2 =	
+\i \cf2 M
+\i0 \cf2 1
+\i\fs25\fsmilli12556 \cf2 i
+\i0 \cf2 1
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 1
+\i \cf2 j
+\i0\fs35\fsmilli17760 \cf2 +\
+		
+\i \cf2 M
+\i0 \cf2 1
+\i\fs25\fsmilli12556 \cf2 i
+\i0 \cf2 2
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 2
+\i \cf2 j
+\i0\fs35\fsmilli17760 \cf2 +\
+
+\i \cf2 		M
+\i0 \cf2 1
+\i\fs25\fsmilli12556 \cf2 i
+\i0 \cf2 3
+\fs35\fsmilli17760 \cf2 \uc0\u8727 
+\i \cf2 M
+\i0 \cf2 2
+\fs25\fsmilli12556 \cf2 3
+\i \cf2 j
+\f0\i0\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\
+Here is the function that can be used to multiply two matrices together:\
+\
+```\
+Matrix44 multiply(const Matrix44& m, const Matrix44& rhs) const\
+\{\
+	Matrix44 mult;\
+	uint8_t i;\
+	uint8_t j;\
+	i = 0;\
+	while (i < 4)\
+	\{\
+		j = 0;\
+		while (j < 4)\
+		\{\
+			mult.m[i][j] = 	m.m[I][0] * rhs[0][j] +\
+					m.m[I][1] * rhs[1][j] +\
+					m.m[I][2] * rhs[2][j] +\
+					m.m[I][3] * rhs[3][j];\
+			j++;\
+		\}\
+		i++;\
+	\}\
+	return (mult);\
+\}\
+```\
+\
+Matrix multiplication is not commutative, M1*M2 doesn\'92t give the same result as M2*M1.\
+\
+eof\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+}
